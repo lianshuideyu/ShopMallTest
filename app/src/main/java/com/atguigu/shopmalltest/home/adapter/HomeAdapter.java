@@ -1,6 +1,8 @@
 package com.atguigu.shopmalltest.home.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,12 +13,14 @@ import android.widget.GridView;
 import android.widget.Toast;
 
 import com.atguigu.shopmalltest.R;
+import com.atguigu.shopmalltest.home.activity.WebViewActivity;
 import com.atguigu.shopmalltest.home.bean.HomeBean;
 import com.atguigu.shopmalltest.home.until.GlideImageLoader;
 import com.atguigu.shopmalltest.until.Constants;
 import com.atguigu.shopmalltest.until.DensityUtil;
 import com.youth.banner.Banner;
 import com.youth.banner.listener.OnBannerListener;
+import com.zhy.magicviewpager.transformer.RotateYTransformer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -83,9 +87,9 @@ public class HomeAdapter extends RecyclerView.Adapter {
             return new ChannelViewHolder(mContext, inflater.inflate(R.layout.channel_item, null));
         } else if (viewType == ACT) {
             return new ActViewHolder(mContext, inflater.inflate(R.layout.act_item, null));
-        }/* else if (viewType == SECKILL) {
+        } else if (viewType == SECKILL) {
             return new SeckillViewHolder(mContext, inflater.inflate(R.layout.seckill_item, null));
-        } else if (viewType == RECOMMEND) {
+        } /*else if (viewType == RECOMMEND) {
             return new RecommendViewHolder(mContext, inflater.inflate(R.layout.recommend_item, null));
         } else if (viewType == HOT) {
             return new HotViewHolder(mContext, inflater.inflate(R.layout.hot_item, null));
@@ -108,10 +112,10 @@ public class HomeAdapter extends RecyclerView.Adapter {
         } else if (getItemViewType(position) == ACT) {
             ActViewHolder actViewHolder = (ActViewHolder) holder;
             actViewHolder.setData(resultBean.getAct_info());
-        }/* else if (getItemViewType(position) == SECKILL) {
+        } else if (getItemViewType(position) == SECKILL) {
             SeckillViewHolder seckillViewHolder = (SeckillViewHolder) holder;
             seckillViewHolder.setData(resultBean.getSeckill_info());
-        } else if (getItemViewType(position) == RECOMMEND) {
+        }/* else if (getItemViewType(position) == RECOMMEND) {
             RecommendViewHolder recommendViewHolder = (RecommendViewHolder) holder;
             recommendViewHolder.setData(resultBean.getRecommend_info());
         } else if (getItemViewType(position) == HOT) {
@@ -144,7 +148,7 @@ public class HomeAdapter extends RecyclerView.Adapter {
     @Override
     public int getItemCount() {
         //全部写完的时候修改成6，只实现一个类型的话就返回1
-        return 3;
+        return 4;
     }
 
     private class BannerViewHolder extends RecyclerView.ViewHolder {
@@ -200,6 +204,7 @@ public class HomeAdapter extends RecyclerView.Adapter {
                 public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                     HomeBean.ResultBean.ChannelInfoBean channelInfoBean = channel_info.get(position);
                     Toast.makeText(mContext, ""+channelInfoBean.getChannel_name(), Toast.LENGTH_SHORT).show();
+
                 }
             });
         }
@@ -218,6 +223,7 @@ public class HomeAdapter extends RecyclerView.Adapter {
             ViewPagerAdapter adapter = new ViewPagerAdapter(mContext,act_info);
             act_viewpager.setAdapter(adapter);
 
+            //设置pager的间距
             act_viewpager.setPageMargin(DensityUtil.dip2px(mContext,20));
 
             //利用接口实现点击事件
@@ -226,8 +232,24 @@ public class HomeAdapter extends RecyclerView.Adapter {
                 public void OnItemClick(int position) {
                     HomeBean.ResultBean.ActInfoBean actInfoBean = act_info.get(position);
                     Toast.makeText(mContext, "" + actInfoBean.getName(), Toast.LENGTH_SHORT).show();
+
+                    Intent intent = new Intent(mContext, WebViewActivity.class);
+                    intent.setData(Uri.parse(Constants.BASE_URL_IMAGE + actInfoBean.getUrl()));
+                    mContext.startActivity(intent);
                 }
             });
+            //翻动页面的特效优化
+            act_viewpager.setPageTransformer(true, new RotateYTransformer());
+        }
+    }
+
+    private class SeckillViewHolder extends RecyclerView.ViewHolder {
+        public SeckillViewHolder(Context mContext, View itemView) {
+            super(itemView);
+        }
+
+        public void setData(HomeBean.ResultBean.SeckillInfoBean seckill_info) {
+
         }
     }
 }

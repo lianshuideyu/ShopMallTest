@@ -12,5 +12,6 @@
         android:layout_gravity="center"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:clipChildren="false" />
+        android:clipChildren="false"
+         />
 </FrameLayout>

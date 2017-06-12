@@ -44,7 +44,7 @@ public class ViewPagerAdapter extends PagerAdapter {
     @Override
     public Object instantiateItem(ViewGroup container, final int position) {
         ImageView imageView = new ImageView(mContext);
-
+        imageView.setScaleType(ImageView.ScaleType.FIT_XY);
         HomeBean.ResultBean.ActInfoBean actInfoBean = datas.get(position);
         //联网请求加载图片
         Glide.with(mContext).load(Constants.BASE_URL_IMAGE+actInfoBean.getIcon_url()).into(imageView);
