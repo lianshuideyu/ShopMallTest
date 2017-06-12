@@ -4,12 +4,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.atguigu.shopmalltest.R;
@@ -24,6 +26,8 @@ import com.zhy.magicviewpager.transformer.RotateYTransformer;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import cn.iwgang.countdownview.CountdownView;
 
 /**
  * Created by Administrator on 2017/6/12.
@@ -89,9 +93,9 @@ public class HomeAdapter extends RecyclerView.Adapter {
             return new ActViewHolder(mContext, inflater.inflate(R.layout.act_item, null));
         } else if (viewType == SECKILL) {
             return new SeckillViewHolder(mContext, inflater.inflate(R.layout.seckill_item, null));
-        } /*else if (viewType == RECOMMEND) {
+        } else if (viewType == RECOMMEND) {
             return new RecommendViewHolder(mContext, inflater.inflate(R.layout.recommend_item, null));
-        } else if (viewType == HOT) {
+        } /*else if (viewType == HOT) {
             return new HotViewHolder(mContext, inflater.inflate(R.layout.hot_item, null));
         }*/
 
@@ -244,12 +248,50 @@ public class HomeAdapter extends RecyclerView.Adapter {
     }
 
     private class SeckillViewHolder extends RecyclerView.ViewHolder {
+        private TextView tvMore;
+        private RecyclerView recyclerView;
+        public Context mContext;
+        private CountdownView countdownView;
+
+        private long dt;
         public SeckillViewHolder(Context mContext, View itemView) {
             super(itemView);
+            tvMore = (TextView) itemView.findViewById(R.id.tv_more_seckill);
+            recyclerView = (RecyclerView) itemView.findViewById(R.id.rv_seckill);
+            countdownView = (CountdownView) itemView.findViewById(R.id.countdownview);
+
+            this.mContext = mContext;
+
         }
 
-        public void setData(HomeBean.ResultBean.SeckillInfoBean seckill_info) {
+        public void setData(final HomeBean.ResultBean.SeckillInfoBean seckill_info) {
 
+            SeckillRecyclerViewAdapter adapter = new SeckillRecyclerViewAdapter(mContext,seckill_info);
+
+            recyclerView.setLayoutManager(new LinearLayoutManager(mContext,LinearLayoutManager.HORIZONTAL,false));
+            recyclerView.setAdapter(adapter);
+
+            tvMore.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Toast.makeText(mContext, "加载更多", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+
+            adapter.setOnItemClickListener(new SeckillRecyclerViewAdapter.OnItemClickListener() {
+                @Override
+                public void setOnItemClick(int positon) {
+                    HomeBean.ResultBean.SeckillInfoBean.ListBean listBean = seckill_info.getList().get(positon);
+                    Toast.makeText(mContext, "" + listBean.getName(), Toast.LENGTH_SHORT).show();
+                }
+            });
+
+
+            //设置时间
+            //秒杀倒计时 -毫秒
+            dt = Integer.valueOf(seckill_info.getEnd_time()) - Integer.valueOf(seckill_info.getStart_time());
+            countdownView.start(dt);
         }
     }
 }
