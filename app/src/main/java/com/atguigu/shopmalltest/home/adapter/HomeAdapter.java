@@ -82,7 +82,6 @@ public class HomeAdapter extends RecyclerView.Adapter {
     }
 
 
-
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == BANNER) {
@@ -95,9 +94,9 @@ public class HomeAdapter extends RecyclerView.Adapter {
             return new SeckillViewHolder(mContext, inflater.inflate(R.layout.seckill_item, null));
         } else if (viewType == RECOMMEND) {
             return new RecommendViewHolder(mContext, inflater.inflate(R.layout.recommend_item, null));
-        } /*else if (viewType == HOT) {
+        } else if (viewType == HOT) {
             return new HotViewHolder(mContext, inflater.inflate(R.layout.hot_item, null));
-        }*/
+        }
 
 
         return null;
@@ -109,23 +108,27 @@ public class HomeAdapter extends RecyclerView.Adapter {
             BannerViewHolder bannerViewHolder = (BannerViewHolder) holder;
             //设置数据Banner的数据
             bannerViewHolder.setData(resultBean.getBanner_info());
-        }
-        else if (getItemViewType(position) == CHANNEL) {
+
+        } else if (getItemViewType(position) == CHANNEL) {
             ChannelViewHolder channelViewHolder = (ChannelViewHolder) holder;
             channelViewHolder.setData(resultBean.getChannel_info());
+
         } else if (getItemViewType(position) == ACT) {
             ActViewHolder actViewHolder = (ActViewHolder) holder;
             actViewHolder.setData(resultBean.getAct_info());
+
         } else if (getItemViewType(position) == SECKILL) {
             SeckillViewHolder seckillViewHolder = (SeckillViewHolder) holder;
             seckillViewHolder.setData(resultBean.getSeckill_info());
-        }/* else if (getItemViewType(position) == RECOMMEND) {
+
+        } else if (getItemViewType(position) == RECOMMEND) {
             RecommendViewHolder recommendViewHolder = (RecommendViewHolder) holder;
             recommendViewHolder.setData(resultBean.getRecommend_info());
+
         } else if (getItemViewType(position) == HOT) {
             HotViewHolder hotViewHolder = (HotViewHolder) holder;
             hotViewHolder.setData(resultBean.getHot_info());
-        }*/
+        }
 
     }
 
@@ -152,13 +155,14 @@ public class HomeAdapter extends RecyclerView.Adapter {
     @Override
     public int getItemCount() {
         //全部写完的时候修改成6，只实现一个类型的话就返回1
-        return 4;
+        return 6;
     }
 
     private class BannerViewHolder extends RecyclerView.ViewHolder {
 
         private final Context mContext;
         private Banner banner;
+
         public BannerViewHolder(Context mContext, View itemView) {
             super(itemView);
             this.mContext = mContext;
@@ -167,7 +171,7 @@ public class HomeAdapter extends RecyclerView.Adapter {
 
         public void setData(List<HomeBean.ResultBean.BannerInfoBean> banner_info) {
             List<String> images = new ArrayList<>();
-            for(int i = 0; i < banner_info.size(); i++) {
+            for (int i = 0; i < banner_info.size(); i++) {
                 images.add(Constants.BASE_URL_IMAGE + banner_info.get(i).getImage());
 
             }
@@ -178,7 +182,7 @@ public class HomeAdapter extends RecyclerView.Adapter {
                         @Override
                         public void OnBannerClick(int position) {
 
-                            Toast.makeText(mContext, "position=="+position, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(mContext, "position==" + position, Toast.LENGTH_SHORT).show();
                         }
                     })
                     .start();
@@ -197,7 +201,7 @@ public class HomeAdapter extends RecyclerView.Adapter {
         }
 
         public void setData(final List<HomeBean.ResultBean.ChannelInfoBean> channel_info) {
-            ChannelAdapter adapter = new ChannelAdapter(mContext,channel_info);
+            ChannelAdapter adapter = new ChannelAdapter(mContext, channel_info);
 
             gv.setAdapter(adapter);
 
@@ -207,7 +211,7 @@ public class HomeAdapter extends RecyclerView.Adapter {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                     HomeBean.ResultBean.ChannelInfoBean channelInfoBean = channel_info.get(position);
-                    Toast.makeText(mContext, ""+channelInfoBean.getChannel_name(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, "" + channelInfoBean.getChannel_name(), Toast.LENGTH_SHORT).show();
 
                 }
             });
@@ -217,6 +221,7 @@ public class HomeAdapter extends RecyclerView.Adapter {
     private class ActViewHolder extends RecyclerView.ViewHolder {
 
         private ViewPager act_viewpager;
+
         public ActViewHolder(Context mContext, View itemView) {
             super(itemView);
             act_viewpager = (ViewPager) itemView.findViewById(R.id.act_viewpager);
@@ -224,11 +229,11 @@ public class HomeAdapter extends RecyclerView.Adapter {
 
         public void setData(final List<HomeBean.ResultBean.ActInfoBean> act_info) {
 
-            ViewPagerAdapter adapter = new ViewPagerAdapter(mContext,act_info);
+            ViewPagerAdapter adapter = new ViewPagerAdapter(mContext, act_info);
             act_viewpager.setAdapter(adapter);
 
             //设置pager的间距
-            act_viewpager.setPageMargin(DensityUtil.dip2px(mContext,20));
+            act_viewpager.setPageMargin(DensityUtil.dip2px(mContext, 20));
 
             //利用接口实现点击事件
             adapter.setOnItemClickListener(new ViewPagerAdapter.OnItemClickListener() {
@@ -254,6 +259,7 @@ public class HomeAdapter extends RecyclerView.Adapter {
         private CountdownView countdownView;
 
         private long dt;
+
         public SeckillViewHolder(Context mContext, View itemView) {
             super(itemView);
             tvMore = (TextView) itemView.findViewById(R.id.tv_more_seckill);
@@ -266,9 +272,9 @@ public class HomeAdapter extends RecyclerView.Adapter {
 
         public void setData(final HomeBean.ResultBean.SeckillInfoBean seckill_info) {
 
-            SeckillRecyclerViewAdapter adapter = new SeckillRecyclerViewAdapter(mContext,seckill_info);
+            SeckillRecyclerViewAdapter adapter = new SeckillRecyclerViewAdapter(mContext, seckill_info);
 
-            recyclerView.setLayoutManager(new LinearLayoutManager(mContext,LinearLayoutManager.HORIZONTAL,false));
+            recyclerView.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));
             recyclerView.setAdapter(adapter);
 
             tvMore.setOnClickListener(new View.OnClickListener() {
@@ -292,6 +298,52 @@ public class HomeAdapter extends RecyclerView.Adapter {
             //秒杀倒计时 -毫秒
             dt = Integer.valueOf(seckill_info.getEnd_time()) - Integer.valueOf(seckill_info.getStart_time());
             countdownView.start(dt);
+        }
+    }
+
+    private class RecommendViewHolder extends RecyclerView.ViewHolder {
+
+        private final Context mContext;
+        private TextView tvMoreRecommend;
+        private GridView gvRecommend;
+
+
+        public RecommendViewHolder(Context mContext, View itemView) {
+            super(itemView);
+            this.mContext = mContext;
+
+            tvMoreRecommend = (TextView) itemView.findViewById(R.id.tv_more_recommend);
+            gvRecommend = (GridView) itemView.findViewById(R.id.gv_recommend);
+        }
+
+        public void setData(List<HomeBean.ResultBean.RecommendInfoBean> recommend_info) {
+            tvMoreRecommend.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Toast.makeText(mContext, "加载更多", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+            RecommendGridViewAdapter adapter = new RecommendGridViewAdapter(mContext,recommend_info);
+            gvRecommend.setAdapter(adapter);
+
+            //点击事件
+            gvRecommend.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+
+                }
+            });
+        }
+    }
+
+    private class HotViewHolder extends RecyclerView.ViewHolder {
+        public HotViewHolder(Context mContext, View itemView) {
+            super(itemView);
+        }
+
+        public void setData(List<HomeBean.ResultBean.HotInfoBean> hot_info) {
+
         }
     }
 }
