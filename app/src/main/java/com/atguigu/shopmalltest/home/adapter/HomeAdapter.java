@@ -5,6 +5,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.GridView;
 import android.widget.Toast;
 
 import com.atguigu.shopmalltest.R;
@@ -176,14 +178,28 @@ public class HomeAdapter extends RecyclerView.Adapter {
     private class ChannelViewHolder extends RecyclerView.ViewHolder {
 
         private final Context mContext;
+        private final GridView gv;
 
         public ChannelViewHolder(Context mContext, View itemView) {
             super(itemView);
             this.mContext = mContext;
+            gv = (GridView) itemView.findViewById(R.id.gv);
         }
 
-        public void setData(List<HomeBean.ResultBean.ChannelInfoBean> channel_info) {
+        public void setData(final List<HomeBean.ResultBean.ChannelInfoBean> channel_info) {
+            ChannelAdapter adapter = new ChannelAdapter(mContext,channel_info);
 
+            gv.setAdapter(adapter);
+
+            //点击事件
+
+            gv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                    HomeBean.ResultBean.ChannelInfoBean channelInfoBean = channel_info.get(position);
+                    Toast.makeText(mContext, ""+channelInfoBean.getChannel_name(), Toast.LENGTH_SHORT).show();
+                }
+            });
         }
     }
 }
