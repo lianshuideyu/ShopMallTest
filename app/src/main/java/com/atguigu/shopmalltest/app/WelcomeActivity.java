@@ -1,10 +1,13 @@
-package com.atguigu.shopmalltest;
+package com.atguigu.shopmalltest.app;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
+
+import com.atguigu.shopmalltest.home.activity.MainActivity;
+import com.atguigu.shopmalltest.R;
 
 public class WelcomeActivity extends AppCompatActivity {
 
