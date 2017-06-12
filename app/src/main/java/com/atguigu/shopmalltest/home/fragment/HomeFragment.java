@@ -1,6 +1,6 @@
 package com.atguigu.shopmalltest.home.fragment;
 
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
@@ -84,6 +84,7 @@ public class HomeFragment extends BaseFragment {
                 break;
             case R.id.ib_top:
                 Toast.makeText(mContext, "回到顶部", Toast.LENGTH_SHORT).show();
+                rvHome.scrollToPosition(0);//回到顶部
                 break;
         }
     }
@@ -110,10 +111,25 @@ public class HomeFragment extends BaseFragment {
         Log.e(TAG, "解析成功==" + homeBean.getResult().getAct_info().get(0).getName());
 
         adapter = new HomeAdapter(mContext,homeBean.getResult());
-
-        LinearLayoutManager manager = new LinearLayoutManager(mContext,LinearLayoutManager.VERTICAL,false);
-        rvHome.setLayoutManager(manager);
         rvHome.setAdapter(adapter);
+
+        GridLayoutManager manager = new GridLayoutManager(mContext,1);
+
+        //设置滑动到哪个位置了的监听
+        manager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+            @Override
+            public int getSpanSize(int position) {
+                if(position <= 3) {
+                    ibTop.setVisibility(View.GONE);
+                }else {
+                    ibTop.setVisibility(View.VISIBLE);
+                }
+
+                //只能返回1
+                return 1;
+            }
+        });
+        rvHome.setLayoutManager(manager);
     }
 
     @Override
