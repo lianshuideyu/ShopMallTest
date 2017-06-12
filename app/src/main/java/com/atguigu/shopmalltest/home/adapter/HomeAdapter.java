@@ -18,6 +18,7 @@ import com.atguigu.shopmalltest.R;
 import com.atguigu.shopmalltest.home.activity.WebViewActivity;
 import com.atguigu.shopmalltest.home.bean.HomeBean;
 import com.atguigu.shopmalltest.home.until.GlideImageLoader;
+import com.atguigu.shopmalltest.home.view.MyGridView;
 import com.atguigu.shopmalltest.until.Constants;
 import com.atguigu.shopmalltest.until.DensityUtil;
 import com.youth.banner.Banner;
@@ -316,7 +317,7 @@ public class HomeAdapter extends RecyclerView.Adapter {
             gvRecommend = (GridView) itemView.findViewById(R.id.gv_recommend);
         }
 
-        public void setData(List<HomeBean.ResultBean.RecommendInfoBean> recommend_info) {
+        public void setData(final List<HomeBean.ResultBean.RecommendInfoBean> recommend_info) {
             tvMoreRecommend.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -331,19 +332,42 @@ public class HomeAdapter extends RecyclerView.Adapter {
             gvRecommend.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-
+                    Toast.makeText(mContext, "" + recommend_info.get(position).getName(), Toast.LENGTH_SHORT).show();
                 }
             });
         }
     }
 
     private class HotViewHolder extends RecyclerView.ViewHolder {
+        private final Context mContext;
+        private TextView tv_more_hot;
+        private MyGridView gv_hot;
         public HotViewHolder(Context mContext, View itemView) {
             super(itemView);
+            this.mContext = mContext;
+
+            tv_more_hot = (TextView) itemView.findViewById(R.id.tv_more_hot);
+            gv_hot = (MyGridView) itemView.findViewById(R.id.gv_hot);
         }
 
-        public void setData(List<HomeBean.ResultBean.HotInfoBean> hot_info) {
+        public void setData(final List<HomeBean.ResultBean.HotInfoBean> hot_info) {
+            tv_more_hot.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Toast.makeText(mContext, "加载更多", Toast.LENGTH_SHORT).show();
+                }
+            });
 
+            HotGridViewAdapter adapter = new HotGridViewAdapter(mContext,hot_info);
+            gv_hot.setAdapter(adapter);
+
+            //点击事件
+            gv_hot.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                    Toast.makeText(mContext, "" + hot_info.get(position).getName(), Toast.LENGTH_SHORT).show();
+                }
+            });
         }
     }
 }
