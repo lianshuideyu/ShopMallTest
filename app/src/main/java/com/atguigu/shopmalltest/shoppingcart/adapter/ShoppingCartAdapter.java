@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.atguigu.shopmalltest.R;
 import com.atguigu.shopmalltest.home.bean.GoodsBean;
+import com.atguigu.shopmalltest.shoppingcart.utils.CartStorage;
 import com.atguigu.shopmalltest.shoppingcart.view.AddSubView;
 import com.atguigu.shopmalltest.until.Constants;
 import com.bumptech.glide.Glide;
@@ -136,6 +137,26 @@ public class ShoppingCartAdapter extends RecyclerView.Adapter<ShoppingCartAdapte
                 notifyItemChanged(i);
             }
 
+        }
+    }
+
+    /**
+     * 删除数据
+     */
+    public void deleteData() {
+        if(datas != null && datas.size() >0){
+            for (int i=0;i<datas.size();i++){
+                GoodsBean goodsBean = datas.get(i);
+                if(goodsBean.isChecked()){
+                    //1.内存中删除
+                    datas.remove(goodsBean);
+                    //2.本地也好保持
+                    CartStorage.getInstace(mContext).deleteData(goodsBean);
+                    //刷新数据
+                    notifyItemRemoved(i);
+                    i--;
+                }
+            }
         }
     }
 
