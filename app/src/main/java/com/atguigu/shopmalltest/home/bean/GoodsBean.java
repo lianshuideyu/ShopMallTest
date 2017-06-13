@@ -21,6 +21,32 @@ public class GoodsBean implements Serializable {
     private String name;
     private String product_id;
 
+    /**
+     * 某个商品在购物车购买的数量
+     */
+    private int number = 1;
+
+    public boolean isChecked() {
+        return isChecked;
+    }
+
+    public void setChecked(boolean checked) {
+        isChecked = checked;
+    }
+
+    public int getNumber() {
+        return number;
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
+    }
+
+    /**
+     * 是否选中
+
+     */
+    private boolean isChecked =true;
     public GoodsBean() {
     }
 
@@ -74,4 +100,6 @@ public class GoodsBean implements Serializable {
                 ", product_id='" + product_id + '\'' +
                 '}';
     }
+
+
 }
