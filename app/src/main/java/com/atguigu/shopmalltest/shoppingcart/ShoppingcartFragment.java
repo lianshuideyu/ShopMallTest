@@ -89,8 +89,22 @@ public class ShoppingcartFragment extends BaseFragment {
             //布局管理器
             recyclerview.setLayoutManager(new LinearLayoutManager(mContext,LinearLayoutManager.VERTICAL,false));
 
-            //设置点击事件
+            //设置点击 事件
+            adapter.setOnItemClickListener(new ShoppingCartAdapter.OnItemClickListener() {
+                @Override
+                public void onItemClickListener(View view, int position) {
+                    //1.设置Bean对象状态取反
+                    GoodsBean goodsBean = list.get(position);
+                    goodsBean.setChecked(!goodsBean.isChecked());
 
+                    adapter.notifyItemChanged(position);
+                    //2.刷新价格
+                    adapter.showTotalPrice();
+
+                    //3.校验是否全选
+                    adapter.checkAll();
+                }
+            });
 
         }else{
             //购物车没有数据
