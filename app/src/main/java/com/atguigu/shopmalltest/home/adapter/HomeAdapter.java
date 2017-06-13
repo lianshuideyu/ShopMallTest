@@ -178,7 +178,7 @@ public class HomeAdapter extends RecyclerView.Adapter {
             banner = (Banner) itemView.findViewById(R.id.banner);
         }
 
-        public void setData(List<HomeBean.ResultBean.BannerInfoBean> banner_info) {
+        public void setData(final List<HomeBean.ResultBean.BannerInfoBean> banner_info) {
             List<String> images = new ArrayList<>();
             for (int i = 0; i < banner_info.size(); i++) {
                 images.add(Constants.BASE_URL_IMAGE + banner_info.get(i).getImage());
@@ -190,8 +190,37 @@ public class HomeAdapter extends RecyclerView.Adapter {
                     .setOnBannerListener(new OnBannerListener() {
                         @Override
                         public void OnBannerClick(int position) {
+                            //点击事件
+                            //Toast.makeText(mContext, "position==" + position, Toast.LENGTH_SHORT).show();
+                            if(position < banner_info.size()){
+                                String product_id = "";
+                                String name = "";
+                                String cover_price = "";
+                                if (position == 0) {
+                                    product_id = "627";
+                                    cover_price = "32.00";
+                                    name = "剑三T恤批发";
+                                } else if (position == 1) {
+                                    product_id = "21";
+                                    cover_price = "8.00";
+                                    name = "同人原创】剑网3 剑侠情缘叁 Q版成男 口袋胸针";
+                                } else {
+                                    product_id = "1341";
+                                    cover_price = "50.00";
+                                    name = "【蓝诺】《天下吾双》 剑网3同人本";
+                                }
+                                String image = banner_info.get(position).getImage();
+                                GoodsBean goodsBean = new GoodsBean();
+                                goodsBean.setName(name);
+                                goodsBean.setCover_price(cover_price);
+                                goodsBean.setFigure(image);
+                                goodsBean.setProduct_id(product_id);
 
-                            Toast.makeText(mContext, "position==" + position, Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(mContext, GoodsInfoActivity.class);
+                                intent.putExtra(GOODS_BEAN, goodsBean);
+                                mContext.startActivity(intent);
+                            }
+
                         }
                     })
                     .start();
