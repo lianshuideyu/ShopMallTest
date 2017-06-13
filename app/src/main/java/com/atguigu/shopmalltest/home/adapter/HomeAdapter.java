@@ -3,6 +3,7 @@ package com.atguigu.shopmalltest.home.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Handler;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -253,6 +254,10 @@ public class HomeAdapter extends RecyclerView.Adapter {
         }
     }
 
+    /**
+     * 是否是第一次启动倒计时
+     */
+    private boolean isFrist = false;
     private class SeckillViewHolder extends RecyclerView.ViewHolder {
         private TextView tvMore;
         private RecyclerView recyclerView;
@@ -260,7 +265,9 @@ public class HomeAdapter extends RecyclerView.Adapter {
         private CountdownView countdownView;
 
         private long dt;
+        private HomeBean.ResultBean.SeckillInfoBean seckillInfo;
 
+        Handler mHandler = new Handler();
         public SeckillViewHolder(Context mContext, View itemView) {
             super(itemView);
             tvMore = (TextView) itemView.findViewById(R.id.tv_more_seckill);
@@ -297,9 +304,42 @@ public class HomeAdapter extends RecyclerView.Adapter {
 
             //设置时间
             //秒杀倒计时 -毫秒
-            dt = Integer.valueOf(seckill_info.getEnd_time()) - Integer.valueOf(seckill_info.getStart_time());
-            countdownView.start(dt);
+           /* dt = Integer.valueOf(seckill_info.getEnd_time()) - Integer.valueOf(seckill_info.getStart_time());
+            countdownView.start(dt);*/
+            this.seckillInfo = seckill_info;
+            if(!isFrist) {//此时为第一次进来
+                isFrist = true;
+                //计算倒计时持续的时间
+                long totalTime  = Long.parseLong(seckill_info.getEnd_time()) - Long.parseLong(seckill_info.getStart_time());
+
+                long curTime = System.currentTimeMillis();//当前时间
+                seckillInfo.setEnd_time(curTime + totalTime + "");
+                //开始刷新
+                startRefreshTime();
+            }
         }
+
+        //开始刷新
+        private void startRefreshTime(){
+            mHandler.postDelayed(mRefreshTimeRunnable,10);
+        }
+
+        Runnable mRefreshTimeRunnable = new Runnable() {
+            @Override
+            public void run() {
+                //得到当前的时间
+                long currentTime = System.currentTimeMillis();
+                if(currentTime >= Long.parseLong(seckillInfo.getEnd_time())) {
+                    //当当前时间大于结束的时间时，倒计时结束
+                    mHandler.removeCallbacksAndMessages(null);
+                }else {
+                    //更新时间
+                    countdownView.updateShow(Long.parseLong(seckillInfo.getEnd_time()) - currentTime);
+                    //每隔1秒更新一次
+                    mHandler.postDelayed(mRefreshTimeRunnable,1000);
+                }
+            }
+        };
     }
 
     private class RecommendViewHolder extends RecyclerView.ViewHolder {
