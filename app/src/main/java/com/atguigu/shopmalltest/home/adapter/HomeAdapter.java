@@ -2,7 +2,6 @@ package com.atguigu.shopmalltest.home.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Handler;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -20,6 +19,7 @@ import com.atguigu.shopmalltest.app.GoodsInfoActivity;
 import com.atguigu.shopmalltest.home.activity.WebViewActivity;
 import com.atguigu.shopmalltest.home.bean.GoodsBean;
 import com.atguigu.shopmalltest.home.bean.HomeBean;
+import com.atguigu.shopmalltest.home.bean.WebViewBean;
 import com.atguigu.shopmalltest.home.until.GlideImageLoader;
 import com.atguigu.shopmalltest.home.view.MyGridView;
 import com.atguigu.shopmalltest.until.Constants;
@@ -38,6 +38,7 @@ import cn.iwgang.countdownview.CountdownView;
  */
 
 public class HomeAdapter extends RecyclerView.Adapter {
+
 
     private final HomeBean.ResultBean resultBean;
     private final Context mContext;
@@ -81,6 +82,7 @@ public class HomeAdapter extends RecyclerView.Adapter {
 
 
     public static final String GOODS_BEAN = "goods_bean";
+    public static final String WEBVIEW_BEAN = "webview_bean";
 
     public HomeAdapter(Context mContext, HomeBean.ResultBean resultBean) {
         this.mContext = mContext;
@@ -249,8 +251,13 @@ public class HomeAdapter extends RecyclerView.Adapter {
                     HomeBean.ResultBean.ActInfoBean actInfoBean = act_info.get(position);
                     Toast.makeText(mContext, "" + actInfoBean.getName(), Toast.LENGTH_SHORT).show();
 
+                    WebViewBean webViewBean = new WebViewBean();
+                    webViewBean.setName(actInfoBean.getName());
+                    webViewBean.setIcon_url(actInfoBean.getIcon_url());
+                    webViewBean.setUrl(Constants.BASE_URL_IMAGE+actInfoBean.getUrl());
+
                     Intent intent = new Intent(mContext, WebViewActivity.class);
-                    intent.setData(Uri.parse(Constants.BASE_URL_IMAGE + actInfoBean.getUrl()));
+                    intent.putExtra(WEBVIEW_BEAN,webViewBean);
                     mContext.startActivity(intent);
                 }
             });

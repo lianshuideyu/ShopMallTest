@@ -21,6 +21,9 @@ public class GoodsBean implements Serializable {
     private String name;
     private String product_id;
 
+    public GoodsBean() {
+    }
+
     public GoodsBean(String cover_price, String figure, String name, String product_id) {
         this.cover_price = cover_price;
         this.figure = figure;
