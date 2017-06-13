@@ -300,7 +300,8 @@ public class HomeAdapter extends RecyclerView.Adapter {
             tvMore.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(mContext, "加载更多", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(mContext, "加载更多", Toast.LENGTH_SHORT).show();
+
                 }
             });
 
@@ -308,8 +309,17 @@ public class HomeAdapter extends RecyclerView.Adapter {
             adapter.setOnItemClickListener(new SeckillRecyclerViewAdapter.OnItemClickListener() {
                 @Override
                 public void setOnItemClick(int positon) {
-                    HomeBean.ResultBean.SeckillInfoBean.ListBean listBean = seckill_info.getList().get(positon);
-                    Toast.makeText(mContext, "" + listBean.getName(), Toast.LENGTH_SHORT).show();
+                    HomeBean.ResultBean.SeckillInfoBean.ListBean infoBean = seckill_info.getList().get(positon);
+                    //Toast.makeText(mContext, "" + infoBean.getName(), Toast.LENGTH_SHORT).show();
+                    //传递数据
+                    GoodsBean goodsBean = new GoodsBean();
+                    goodsBean.setName(infoBean.getName());
+                    goodsBean.setCover_price(infoBean.getCover_price());
+                    goodsBean.setFigure(infoBean.getFigure());
+                    goodsBean.setProduct_id(infoBean.getProduct_id());
+                    Intent intent = new Intent(mContext, GoodsInfoActivity.class);
+                    intent.putExtra(GOODS_BEAN,goodsBean);
+                    mContext.startActivity(intent);
                 }
             });
 
