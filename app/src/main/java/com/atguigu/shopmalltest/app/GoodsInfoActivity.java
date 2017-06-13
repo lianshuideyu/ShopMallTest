@@ -1,6 +1,7 @@
 package com.atguigu.shopmalltest.app;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -133,7 +134,9 @@ public class GoodsInfoActivity extends AppCompatActivity {
                 Toast.makeText(this, "更多", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.tv_good_info_callcenter:
-                Toast.makeText(this, "呼叫中心", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this, "呼叫中心", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(this,CallCenterActivity.class);
+                startActivity(intent);
                 break;
             case R.id.tv_good_info_collection:
                 Toast.makeText(this, "收藏", Toast.LENGTH_SHORT).show();
