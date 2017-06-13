@@ -59,6 +59,7 @@ public class ShoppingcartFragment extends BaseFragment {
     Unbinder unbinder;
     private ShoppingCartAdapter adapter;
 
+    private List<GoodsBean> list;
     /**
      * 初始化控件
      * retur
@@ -76,12 +77,12 @@ public class ShoppingcartFragment extends BaseFragment {
     public void initData() {
         super.initData();
         Log.e(TAG, "绑定数据到控件上...");
-        List<GoodsBean> list =  CartStorage.getInstace(mContext).getAllData();
+        list =  CartStorage.getInstace(mContext).getAllData();
         if(list != null && list.size() >0){
             //购物车有数据
             llEmptyShopcart.setVisibility(View.GONE);
 
-            adapter = new ShoppingCartAdapter(mContext,list);
+            adapter = new ShoppingCartAdapter(mContext,list,tvShopcartTotal,checkboxAll,checkboxDeleteAll);
             //设置RecyclerView的适配器
             recyclerview.setAdapter(adapter);
 

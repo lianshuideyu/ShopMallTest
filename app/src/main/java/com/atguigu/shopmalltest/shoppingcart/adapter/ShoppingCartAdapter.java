@@ -28,10 +28,39 @@ public class ShoppingCartAdapter extends RecyclerView.Adapter<ShoppingCartAdapte
     private final Context mContext;
     private final List<GoodsBean> datas;
 
-
-    public ShoppingCartAdapter(Context mContext, List<GoodsBean> list) {
+    private final TextView tvShopcartTotal;
+    private final CheckBox checkboxAll;
+    private final CheckBox checkboxDeleteAll;
+    public ShoppingCartAdapter(Context mContext, List<GoodsBean> list, TextView tvShopcartTotal, CheckBox checkboxAll, CheckBox checkboxDeleteAll) {
         this.mContext = mContext;
         this.datas = list;
+        this.tvShopcartTotal = tvShopcartTotal;
+        this.checkboxAll = checkboxAll;
+        this.checkboxDeleteAll = checkboxDeleteAll;
+        showTotalPrice();
+    }
+
+    private void showTotalPrice() {
+        //显示总价格
+        tvShopcartTotal.setText("合计:"+getTotalPrice());
+    }
+
+    /**
+     * 返回总价格
+     * @return
+     */
+    private double getTotalPrice() {
+        double totalPrice = 0;
+        if(datas != null && datas.size() >0){
+            for (int i=0;i<datas.size();i++){
+                GoodsBean goodsBean = datas.get(i);
+                if(goodsBean.isChecked()){
+                    //totalPrice += Double.parseDouble(goodsBean.getCover_price()) * goodsBean.getNumber();
+                    totalPrice += Double.parseDouble(goodsBean.getCover_price()) * goodsBean.getNumber();
+                }
+            }
+        }
+        return totalPrice;
     }
 
     @Override

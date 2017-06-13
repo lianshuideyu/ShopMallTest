@@ -26,7 +26,7 @@ public class CartStorage {
 
     public CartStorage(Context mContext) {
         this.mContext = mContext;
-        sparseArray = new SparseArray<>();
+        sparseArray = new SparseArray();
         //从本地获取数据
         listToSparseArray();
     }
