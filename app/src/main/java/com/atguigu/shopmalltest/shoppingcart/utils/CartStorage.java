@@ -48,7 +48,7 @@ public class CartStorage {
      * 得到所有数据
      * @return
      */
-    private List<GoodsBean> getAllData() {
+    public List<GoodsBean> getAllData() {
         return getLocalData();
     }
 

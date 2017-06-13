@@ -11,6 +11,7 @@ public class Constants {
     //public static String BASE_URL = "http://192.168.51.104:8080/atguigu";
   //    public static String BASE_URL = "http://192.168.191.1:8080/atguigu";
 //    public static String BASE_URL = "http://10.0.2.2:8080/atguigu";
+//    public static String BASE_URL = "http://192.168.31.105:8080/FileUpload/shangcheng";
     public static String BASE_URL = "http://47.93.118.241:8081/android/resources";
 
 
