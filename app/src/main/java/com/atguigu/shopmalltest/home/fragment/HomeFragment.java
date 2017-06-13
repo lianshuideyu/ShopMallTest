@@ -83,7 +83,7 @@ public class HomeFragment extends BaseFragment {
                 Toast.makeText(mContext, "消息通知", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.ib_top:
-                Toast.makeText(mContext, "回到顶部", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(mContext, "回到顶部", Toast.LENGTH_SHORT).show();
                 rvHome.scrollToPosition(0);//回到顶部
                 break;
         }

@@ -16,7 +16,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.atguigu.shopmalltest.R;
+import com.atguigu.shopmalltest.app.GoodsInfoActivity;
 import com.atguigu.shopmalltest.home.activity.WebViewActivity;
+import com.atguigu.shopmalltest.home.bean.GoodsBean;
 import com.atguigu.shopmalltest.home.bean.HomeBean;
 import com.atguigu.shopmalltest.home.until.GlideImageLoader;
 import com.atguigu.shopmalltest.home.view.MyGridView;
@@ -76,6 +78,9 @@ public class HomeAdapter extends RecyclerView.Adapter {
     public int currentType = BANNER;
 
     private LayoutInflater inflater;
+
+
+    public static final String GOODS_BEAN = "goods_bean";
 
     public HomeAdapter(Context mContext, HomeBean.ResultBean resultBean) {
         this.mContext = mContext;
@@ -348,7 +353,6 @@ public class HomeAdapter extends RecyclerView.Adapter {
         private TextView tvMoreRecommend;
         private GridView gvRecommend;
 
-
         public RecommendViewHolder(Context mContext, View itemView) {
             super(itemView);
             this.mContext = mContext;
@@ -403,9 +407,21 @@ public class HomeAdapter extends RecyclerView.Adapter {
 
             //点击事件
             gv_hot.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                    Toast.makeText(mContext, "" + hot_info.get(position).getName(), Toast.LENGTH_SHORT).show();
+                    HomeBean.ResultBean.HotInfoBean data = hot_info.get(position);
+                    Toast.makeText(mContext, "" + data.getName(), Toast.LENGTH_SHORT).show();
+
+                    String cover_price = data.getCover_price();
+                    String name = data.getName();
+                    String figure = data.getFigure();
+                    String product_id = data.getProduct_id();
+                    GoodsBean goodsBean = new GoodsBean(cover_price, figure,name, product_id);
+
+                    Intent intent = new Intent(mContext, GoodsInfoActivity.class);
+                    intent.putExtra(GOODS_BEAN,goodsBean);
+                    mContext.startActivity(intent);
                 }
             });
         }
