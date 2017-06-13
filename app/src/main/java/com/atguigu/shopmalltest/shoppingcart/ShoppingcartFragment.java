@@ -208,7 +208,7 @@ public class ShoppingcartFragment extends BaseFragment {
                 Toast.makeText(mContext, "编辑", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.checkbox_all:
-                Toast.makeText(mContext, "全选", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(mContext, "全选", Toast.LENGTH_SHORT).show();
                 boolean isChecked = checkboxAll.isChecked();
                 //全选和反全选
                 adapter.checkAll_none(isChecked);
@@ -219,7 +219,7 @@ public class ShoppingcartFragment extends BaseFragment {
                 Toast.makeText(mContext, "结算", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.checkbox_delete_all:
-                Toast.makeText(mContext, "删除全选", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(mContext, "删除全选", Toast.LENGTH_SHORT).show();
 
                 isChecked = checkboxDeleteAll.isChecked();
                 //全选和反全选
@@ -229,7 +229,7 @@ public class ShoppingcartFragment extends BaseFragment {
                 adapter.showTotalPrice();
                 break;
             case R.id.btn_delete:
-                Toast.makeText(mContext, "删除按钮", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(mContext, "删除按钮", Toast.LENGTH_SHORT).show();
                 adapter.deleteData();
                 adapter.checkAll();
                 showEempty();
