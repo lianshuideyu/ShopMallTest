@@ -75,7 +75,7 @@ public class ShoppingCartAdapter extends RecyclerView.Adapter<ShoppingCartAdapte
 //1.先得到数据
         final GoodsBean goodsBean = datas.get(position);
         //2.绑定数据
-//        holder.cbGov.setChecked(goodsBean.isChecked());
+        holder.cbGov.setChecked(goodsBean.isChecked());
         //图片
         Glide.with(mContext).load(Constants.BASE_URL_IMAGE+goodsBean.getFigure()).into(holder.ivGov);
         //设置名称

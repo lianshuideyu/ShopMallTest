@@ -124,7 +124,9 @@ public class GoodsInfoActivity extends AppCompatActivity {
 
     }
 
-    @OnClick({R.id.ib_good_info_back, R.id.ib_good_info_more, R.id.tv_good_info_callcenter, R.id.tv_good_info_collection, R.id.tv_good_info_cart, R.id.btn_good_info_addcart, R.id.tv_more_share, R.id.tv_more_search, R.id.tv_more_home})
+    @OnClick({R.id.ib_good_info_back, R.id.ib_good_info_more, R.id.tv_good_info_callcenter,
+            R.id.tv_good_info_collection, R.id.tv_good_info_cart, R.id.btn_good_info_addcart,
+            R.id.tv_more_share, R.id.tv_more_search, R.id.tv_more_home})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ib_good_info_back:
