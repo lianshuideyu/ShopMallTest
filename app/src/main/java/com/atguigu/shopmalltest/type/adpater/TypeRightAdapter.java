@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -200,7 +199,7 @@ public class TypeRightAdapter extends RecyclerView.Adapter {
 
         public void setData(List<TypeBean.ResultBean.ChildBean> child) {
             if(child != null && child.size() > 0) {
-                Log.e("TAG","chiled.size==" + child.size());
+                //Log.e("TAG","chiled.size==" + child.size());
                 final TypeBean.ResultBean.ChildBean childBean = child.get(getLayoutPosition()-1);
                 tvOrdinaryRight.setText(childBean.getName());
 
