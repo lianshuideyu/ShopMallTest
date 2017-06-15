@@ -91,6 +91,19 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
                 ft.show(currentFragment);
             }
 
+
+            /*if(!currentFragment.equals(fragments.get(1))) {
+                TypeFragment typef = (TypeFragment) fragments.get(1);
+                if(typef.tempFragment != null) {
+                    ft.hide(typef.tempFragment);
+                }
+            }else {
+                TypeFragment typef = (TypeFragment) fragments.get(1);
+                if(typef.tempFragment != null) {
+                    ft.show(typef.tempFragment);
+                }
+            }*/
+
             ft.commit();
             tempFragment = currentFragment;
         }

@@ -38,7 +38,7 @@ public class TypeFragment extends BaseFragment {
 
     private String[] titls = {"分类", "标签"};
     private ArrayList<BaseFragment> fragments;
-    private BaseFragment tempFragment;
+    public BaseFragment tempFragment;
     /**
      * 初始化控件
      * retur
@@ -83,7 +83,7 @@ public class TypeFragment extends BaseFragment {
             }
 
             if(!currentFragment.isAdded()) {
-                ft.add(R.id.frameLayout,currentFragment);
+                ft.add(R.id.fl_type,currentFragment);
 
             }else {
                 ft.show(currentFragment);
@@ -108,12 +108,5 @@ public class TypeFragment extends BaseFragment {
     public void onViewClicked() {
         Toast.makeText(mContext, "搜索", Toast.LENGTH_SHORT).show();
     }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
-    }
-
 
 }
