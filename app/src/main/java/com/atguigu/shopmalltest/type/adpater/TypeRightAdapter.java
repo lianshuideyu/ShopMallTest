@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.atguigu.shopmalltest.R;
 import com.atguigu.shopmalltest.app.GoodsInfoActivity;
@@ -47,6 +49,7 @@ public class TypeRightAdapter extends RecyclerView.Adapter {
     private static final int COMMON = 1;
 
 
+
     /**
      * 当前类型
      */
@@ -63,6 +66,8 @@ public class TypeRightAdapter extends RecyclerView.Adapter {
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == HOT) {
             return new HotViewHolder(View.inflate(mContext, R.layout.item_hot_right, null));
+        } else if (viewType == COMMON) {
+            return new CommonViewHolder(View.inflate(mContext, R.layout.item_common_right, null));
         }
 
         return null;
@@ -70,10 +75,14 @@ public class TypeRightAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        if(getItemViewType(position) == HOT) {
+        if (getItemViewType(position) == HOT) {
             HotViewHolder hotViewHolder = (HotViewHolder) holder;
             //设置数据
             hotViewHolder.setData(hot_product_list);
+        }else if(getItemViewType(position) == COMMON) {
+            CommonViewHolder commonViewHolder = (CommonViewHolder) holder;
+            //设置数据
+            commonViewHolder.setData(child);
         }
     }
 
@@ -91,7 +100,7 @@ public class TypeRightAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
-        return 1;
+        return 1 + child.size();
     }
 
     class HotViewHolder extends RecyclerView.ViewHolder {
@@ -102,7 +111,7 @@ public class TypeRightAdapter extends RecyclerView.Adapter {
 
         public HotViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(this,itemView);
+            ButterKnife.bind(this, itemView);
 
         }
 
@@ -134,7 +143,7 @@ public class TypeRightAdapter extends RecyclerView.Adapter {
                 //请求图片
                 Glide.with(mContext).load(Constants.BASE_URL_IMAGE + listBean.getFigure()).into(imageView);
 
-                myLinear.addView(imageView,ivParams);
+                myLinear.addView(imageView, ivParams);
 
 
                 //文字
@@ -146,7 +155,7 @@ public class TypeRightAdapter extends RecyclerView.Adapter {
                 textView.setTextColor(Color.parseColor("#ed3f3f"));
                 textView.setText("￥" + listBean.getCover_price());
 
-                myLinear.addView(textView,tvParams);
+                myLinear.addView(textView, tvParams);
 //
 //
                 llHotRight.addView(myLinear, params);
@@ -156,7 +165,7 @@ public class TypeRightAdapter extends RecyclerView.Adapter {
                 myLinear.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        int position  = (int) v.getTag();
+                        int position = (int) v.getTag();
                         //Toast.makeText(mContext, "position=="+position, Toast.LENGTH_SHORT).show();
 
 
@@ -164,10 +173,10 @@ public class TypeRightAdapter extends RecyclerView.Adapter {
                         String name = listBean.getName();
                         String figure = listBean.getFigure();
                         String product_id = listBean.getProduct_id();
-                        GoodsBean goodsBean = new GoodsBean(cover_price, figure,name, product_id);
+                        GoodsBean goodsBean = new GoodsBean(cover_price, figure, name, product_id);
 
                         Intent intent = new Intent(mContext, GoodsInfoActivity.class);
-                        intent.putExtra(GOODS_BEAN,goodsBean);
+                        intent.putExtra(GOODS_BEAN, goodsBean);
                         mContext.startActivity(intent);
                     }
                 });
@@ -175,4 +184,40 @@ public class TypeRightAdapter extends RecyclerView.Adapter {
         }
     }
 
+    class CommonViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.iv_ordinary_right)
+        ImageView ivOrdinaryRight;
+        @BindView(R.id.tv_ordinary_right)
+        TextView tvOrdinaryRight;
+        @BindView(R.id.ll_root)
+        LinearLayout llRoot;
+
+        public CommonViewHolder(View itemView) {
+            super(itemView);
+            ButterKnife.bind(this, itemView);
+
+        }
+
+        public void setData(List<TypeBean.ResultBean.ChildBean> child) {
+            if(child != null && child.size() > 0) {
+                Log.e("TAG","chiled.size==" + child.size());
+                final TypeBean.ResultBean.ChildBean childBean = child.get(getLayoutPosition()-1);
+                tvOrdinaryRight.setText(childBean.getName());
+
+                //请求图片
+                Glide.with(mContext).load(Constants.BASE_URL_IMAGE + childBean.getPic()).into(ivOrdinaryRight);
+
+                //设置点击事件
+                llRoot.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Toast.makeText(mContext, ""+childBean.getName(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+
+
+
+        }
+    }
 }
