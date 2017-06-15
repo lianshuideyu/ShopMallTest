@@ -13,11 +13,11 @@ import okhttp3.OkHttpClient;
  */
 
 public class MyApplication extends Application {
-
+    public static MyApplication instance;
     @Override
     public void onCreate() {
         super.onCreate();
-
+        instance = this;
         initOkhttp();
     }
 
@@ -30,5 +30,13 @@ public class MyApplication extends Application {
                 .build();
 
         OkHttpUtils.initClient(okHttpClient);
+    }
+
+    /**
+     * 得到全局的上下文
+     * @return
+     */
+    public static MyApplication getContext(){
+        return instance;
     }
 }
