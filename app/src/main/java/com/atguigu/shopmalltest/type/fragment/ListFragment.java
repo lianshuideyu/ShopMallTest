@@ -1,19 +1,26 @@
 package com.atguigu.shopmalltest.type.fragment;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.alibaba.fastjson.JSON;
 import com.atguigu.shopmalltest.R;
 import com.atguigu.shopmalltest.base.BaseFragment;
 import com.atguigu.shopmalltest.type.adpater.TypeLeftAdapter;
+import com.atguigu.shopmalltest.type.bean.TypeBean;
+import com.atguigu.shopmalltest.until.Constants;
+import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.callback.StringCallback;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-
-import static android.R.string.no;
+import okhttp3.Call;
 
 /**
  * Created by Administrator on 2017/6/14.
@@ -28,6 +35,14 @@ public class ListFragment extends BaseFragment {
     Unbinder unbinder;
 
     private TypeLeftAdapter leftAdapter;
+
+    //联网地址
+    private String[] urls = new String[]{Constants.SKIRT_URL, Constants.JACKET_URL, Constants.PANTS_URL,
+            Constants.OVERCOAT_URL, Constants.ACCESSORY_URL, Constants.BAG_URL, Constants.DRESS_UP_URL,
+            Constants.HOME_PRODUCTS_URL, Constants.STATIONERY_URL,
+            Constants.DIGIT_URL, Constants.GAME_URL};
+    private List<TypeBean.ResultBean> result;
+
 
     @Override
     public View initView() {
@@ -53,6 +68,36 @@ public class ListFragment extends BaseFragment {
 
         leftAdapter = new TypeLeftAdapter(mContext);
         lvLeft.setAdapter(leftAdapter);
+
+        //联网请求,默认请求第一个item
+        getDataFromNet(urls[0]);
+    }
+
+    private void getDataFromNet(String url) {
+        OkHttpUtils
+                .get()
+                .url(url)
+                .build()
+                .execute(new StringCallback() {
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+                        Log.e("TAG","ListFragment联网失败==" + e.getMessage());
+                    }
+
+                    @Override
+                    public void onResponse(String response, int id) {
+                        Log.e("TAG","ListFragment联网成功==" + response);
+                        //解析数据
+                        processData(response);
+                    }
+                });
+
+    }
+
+    private void processData(String response) {
+        TypeBean typeBean = JSON.parseObject(response, TypeBean.class);
+        result = typeBean.getResult();
+        Log.e("TAG","ListFragment解析成功=="+typeBean.getResult().get(0).getName());
     }
 
     @Override
