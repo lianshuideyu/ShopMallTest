@@ -1,5 +1,6 @@
 package com.atguigu.shopmalltest.type.fragment;
 
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
@@ -10,6 +11,7 @@ import com.alibaba.fastjson.JSON;
 import com.atguigu.shopmalltest.R;
 import com.atguigu.shopmalltest.base.BaseFragment;
 import com.atguigu.shopmalltest.type.adpater.TypeLeftAdapter;
+import com.atguigu.shopmalltest.type.adpater.TypeRightAdapter;
 import com.atguigu.shopmalltest.type.bean.TypeBean;
 import com.atguigu.shopmalltest.until.Constants;
 import com.zhy.http.okhttp.OkHttpUtils;
@@ -41,7 +43,9 @@ public class ListFragment extends BaseFragment {
             Constants.OVERCOAT_URL, Constants.ACCESSORY_URL, Constants.BAG_URL, Constants.DRESS_UP_URL,
             Constants.HOME_PRODUCTS_URL, Constants.STATIONERY_URL,
             Constants.DIGIT_URL, Constants.GAME_URL};
+
     private List<TypeBean.ResultBean> result;
+    private TypeRightAdapter rightAdapter;
 
 
     @Override
@@ -57,6 +61,8 @@ public class ListFragment extends BaseFragment {
 
               //刷新适配器
                 leftAdapter.notifyDataSetChanged();
+
+                getDataFromNet(urls[position]);
             }
         });
         return view;
@@ -98,6 +104,24 @@ public class ListFragment extends BaseFragment {
         TypeBean typeBean = JSON.parseObject(response, TypeBean.class);
         result = typeBean.getResult();
         Log.e("TAG","ListFragment解析成功=="+typeBean.getResult().get(0).getName());
+
+        rightAdapter = new TypeRightAdapter(mContext,result.get(0));
+        rvRight.setAdapter(rightAdapter);
+
+        //布局管理
+        GridLayoutManager manager = new GridLayoutManager(mContext,3);
+        manager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+            @Override
+            public int getSpanSize(int position) {
+                if(position == 0) {
+                    return 3;
+                }else {
+                    return 1;
+                }
+            }
+        });
+
+        rvRight.setLayoutManager(manager);
     }
 
     @Override
