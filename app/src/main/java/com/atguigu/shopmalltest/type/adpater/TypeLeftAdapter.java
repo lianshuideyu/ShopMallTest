@@ -8,6 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.atguigu.shopmalltest.R;
+import com.zhy.autolayout.utils.AutoUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -53,6 +54,8 @@ public class TypeLeftAdapter extends BaseAdapter {
             viewHolder = new ViewHolder(convertView );
 
             convertView.setTag(viewHolder);
+            //对于listview，注意添加这一行，即可在item上使用高度
+            AutoUtils.autoSize(convertView);
         }else {
 
             viewHolder = (ViewHolder) convertView.getTag();

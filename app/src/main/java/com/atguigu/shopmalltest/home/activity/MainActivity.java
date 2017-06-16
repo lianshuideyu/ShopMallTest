@@ -3,7 +3,6 @@ package com.atguigu.shopmalltest.home.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
 import android.widget.FrameLayout;
 import android.widget.RadioGroup;
 
@@ -14,13 +13,14 @@ import com.atguigu.shopmalltest.home.fragment.HomeFragment;
 import com.atguigu.shopmalltest.shoppingcart.ShoppingcartFragment;
 import com.atguigu.shopmalltest.type.TypeFragment;
 import com.atguigu.shopmalltest.user.UserFragment;
+import com.zhy.autolayout.AutoLayoutActivity;
 
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity implements RadioGroup.OnCheckedChangeListener {
+public class MainActivity extends AutoLayoutActivity implements RadioGroup.OnCheckedChangeListener {
 
     @BindView(R.id.frameLayout)
     FrameLayout frameLayout;
