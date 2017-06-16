@@ -10,7 +10,7 @@ import com.atguigu.shopmalltest.R;
 import com.atguigu.shopmalltest.base.BaseFragment;
 import com.atguigu.shopmalltest.community.CommunityFragment;
 import com.atguigu.shopmalltest.home.fragment.HomeFragment;
-import com.atguigu.shopmalltest.shoppingcart.ShoppingcartFragment;
+import com.atguigu.shopmalltest.shoppingcart.fragment.ShoppingcartFragment;
 import com.atguigu.shopmalltest.type.TypeFragment;
 import com.atguigu.shopmalltest.user.UserFragment;
 import com.zhy.autolayout.AutoLayoutActivity;

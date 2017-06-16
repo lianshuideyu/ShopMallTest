@@ -99,8 +99,11 @@ public class ShoppingCartAdapter extends RecyclerView.Adapter<ShoppingCartAdapte
                 CartStorage.getInstace(mContext).updateData(goodsBean);
 
                 showTotalPrice();
+                checkAll();
             }
         });
+
+
     }
 
     @Override

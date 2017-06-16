@@ -99,7 +99,7 @@ public class CartStorage {
         //先判断是否已保存过
         if(tempGoodsBean != null) {
             //已经保存过,更新商品在购物车中的数量
-            tempGoodsBean.setNumber(goodsBean.getNumber());
+            tempGoodsBean.setNumber(goodsBean.getNumber() + tempGoodsBean.getNumber());
         }else {
             //没有添加过
             tempGoodsBean = goodsBean;

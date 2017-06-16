@@ -1,4 +1,4 @@
-package com.atguigu.shopmalltest.shoppingcart;
+package com.atguigu.shopmalltest.shoppingcart.fragment;
 
 import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
@@ -157,6 +157,7 @@ public class ShoppingcartFragment extends BaseFragment {
             //设置RecyclerView的适配器
             recyclerview.setAdapter(adapter);
 
+
             //布局管理器
             recyclerview.setLayoutManager(new LinearLayoutManager(mContext,LinearLayoutManager.VERTICAL,false));
 
@@ -177,24 +178,20 @@ public class ShoppingcartFragment extends BaseFragment {
                 }
             });
 
+            adapter.checkAll();//第一次进来就校验一次
         }else{
             //购物车没有数据
             llEmptyShopcart.setVisibility(View.VISIBLE);
         }
     }
 
+
     @Override
     public void onResume() {
         super.onResume();
 
-    }
-
-    @Override
-    public void onHiddenChanged(boolean hidden) {
-        super.onHiddenChanged(hidden);
-        if (!hidden) {
-            showData();
-        }
+        //当屏幕重新聚焦的时候，刷新页面数据
+        showData();
     }
 
 

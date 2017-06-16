@@ -172,22 +172,22 @@ public class GoodsInfoActivity extends AppCompatActivity {
     }
 
     //缓存
-    private GoodsBean tempGoodsBean;
+//    private GoodsBean tempGoodsBean;
     //该商品信息是否在购物车中存在
-    private  boolean isExist = false;
+//    private  boolean isExist = false;
 
     /**
      * 显示popupWindow
      */
     private void showPopwindow() {
 
-        tempGoodsBean = CartStorage.getInstace(this).findDete(goodsBean.getProduct_id());//购物车里面
+        /*tempGoodsBean = CartStorage.getInstace(this).findDete(goodsBean.getProduct_id());//购物车里面
         if(tempGoodsBean == null){//是否在购物车中存在
             isExist = false;
             tempGoodsBean = goodsBean;
         }else {
             isExist  =true;
-        }
+        }*/
 
 
         // 1 利用layoutInflater获得View
@@ -223,20 +223,20 @@ public class GoodsInfoActivity extends AppCompatActivity {
         Glide.with(GoodsInfoActivity.this).load(Constants.BASE_URL_IMAGE + goodsBean.getFigure()).into(iv_goodinfo_photo);
 
         // 名称
-        tv_goodinfo_name.setText(tempGoodsBean.getName());
+        tv_goodinfo_name.setText(goodsBean.getName());
         // 显示价格
-        tv_goodinfo_price.setText(tempGoodsBean.getCover_price());
+        tv_goodinfo_price.setText(goodsBean.getCover_price());
 
         // 设置最大值和当前值
-        nas_goodinfo_num.setMaxValue(100);//库存100
+        nas_goodinfo_num.setMaxValue(20);//库存100
 
-        nas_goodinfo_num.setValue(tempGoodsBean.getNumber());
+        nas_goodinfo_num.setValue(1);//从详情页面popuwindow打开默认都为1
 
 
         nas_goodinfo_num.setOnNumberChangerListener(new AddSubView.OnNumberChangerListener() {
             @Override
             public void onNumberChanger(int value) {
-                tempGoodsBean.setNumber(value);
+                goodsBean.setNumber(value);
             }
         });
 
@@ -244,9 +244,7 @@ public class GoodsInfoActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 window.dismiss();
-                if(isExist&& tempGoodsBean.getNumber()==1){
-                    tempGoodsBean.setNumber(tempGoodsBean.getNumber()+1);
-                }
+
             }
         });
 
@@ -255,8 +253,8 @@ public class GoodsInfoActivity extends AppCompatActivity {
             public void onClick(View v) {
                 window.dismiss();
                 //添加购物车
-                CartStorage.getInstace(GoodsInfoActivity.this).addData(tempGoodsBean);
-                Log.e("TAG", "66:" + tempGoodsBean.toString());
+                CartStorage.getInstace(GoodsInfoActivity.this).addData(goodsBean);
+                Log.e("TAG", "66:" + goodsBean.toString());
                 Toast.makeText(GoodsInfoActivity.this, "添加购物车成功", Toast.LENGTH_SHORT).show();
             }
         });
