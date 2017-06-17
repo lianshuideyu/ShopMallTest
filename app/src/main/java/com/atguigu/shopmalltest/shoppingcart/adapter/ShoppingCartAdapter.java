@@ -51,7 +51,7 @@ public class ShoppingCartAdapter extends RecyclerView.Adapter<ShoppingCartAdapte
      * 返回总价格
      * @return
      */
-    private double getTotalPrice() {
+    public double getTotalPrice() {
         double totalPrice = 0;
         if(datas != null && datas.size() >0){
             for (int i=0;i<datas.size();i++){

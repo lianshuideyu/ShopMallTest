@@ -42,4 +42,5 @@ dependencies {
     compile 'com.zhy:autolayout:1.4.5'
     compile 'com.android.support:design:25.3.1'
     compile 'com.linsea:opendanmaku:1.0.0@aar'
+    compile files('libs/alipaySdk-20160809.jar')
 }

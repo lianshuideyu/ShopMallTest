@@ -19,6 +19,7 @@ import com.atguigu.shopmalltest.home.activity.MainActivity;
 import com.atguigu.shopmalltest.home.bean.GoodsBean;
 import com.atguigu.shopmalltest.shoppingcart.adapter.ShoppingCartAdapter;
 import com.atguigu.shopmalltest.shoppingcart.utils.CartStorage;
+import com.atguigu.shopmalltest.shoppingcart.pay.PayDemo;
 
 import java.util.List;
 
@@ -73,12 +74,17 @@ public class ShoppingcartFragment extends BaseFragment {
      * 初始化控件
      * retur
      */
+
+    private PayDemo payDemo;
+
     @Override
     public View initView() {
         Log.e(TAG, "初始化主页控件...");
         View view = View.inflate(mContext, R.layout.fragment_shopping_cart, null);
 
         unbinder = ButterKnife.bind(this, view);
+
+        payDemo = new PayDemo(mContext);
 
         //设置编辑状态
         tvShopcartEdit.setTag(ACTION_EDIT);
@@ -216,7 +222,9 @@ public class ShoppingcartFragment extends BaseFragment {
                 adapter.showTotalPrice();
                 break;
             case R.id.btn_check_out:
-                Toast.makeText(mContext, "结算", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, "去结算", Toast.LENGTH_SHORT).show();
+                payDemo.pay(adapter.getTotalPrice());
+
                 break;
             case R.id.checkbox_delete_all:
                 //Toast.makeText(mContext, "删除全选", Toast.LENGTH_SHORT).show();

@@ -77,6 +77,8 @@ public class GoodsInfoActivity extends AppCompatActivity {
     LinearLayout llRoot;
 
     private GoodsBean goodsBean;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,6 +89,8 @@ public class GoodsInfoActivity extends AppCompatActivity {
 
         //设置数据
         setData();
+
+
     }
 
     private void setData() {
